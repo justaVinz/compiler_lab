@@ -1,6 +1,7 @@
 # ---- Build output ----
 build/
 bin/
+.idea
 
 # ---- CMake cache and generated files ----
 CMakeFiles/
