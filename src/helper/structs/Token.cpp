@@ -8,16 +8,21 @@
 #include <string>
 
 
-Token::Token(std::string type, std::string val, int line, int index) {
-    tokenType = type;
-    value = val;
-    sourceLine = line;
-    sourceIndex = index;
-}
+Token::Token(std::string type, std::string val, int line, int index)
+    : tokenType(std::move(type)), value(std::move(val)), sourceLine(line), sourceIndex(index) {}
+
+Token::Token()
+    : tokenType(""), value(""), sourceLine(0), sourceIndex(0) {}
+
 
 std::ostream& operator<<(std::ostream& os, const Token& token) {
-    os << "Token(" << token.tokenType << ", " << token.value << ", " << token.sourceLine << ", " << token.sourceIndex << ")";
+    os << "Token("
+       << token.getTokenType() << ", "
+       << token.getValue() << ", "
+       << token.getSourceLine() << ", "
+       << token.getSourceIndex() << ")";
     return os;
 }
+
 
 
