@@ -1,15 +1,15 @@
-#include "TokenizeHelper.h"
+#include "../helper/TokenizeHelper.h"
 
 #include <iostream>
 #include <ostream>
 
-#include "structs/TokenizeAttempt.h"
+#include "../helper/structs/TokenizeAttempt.h"
 
-std::optional<TokenizeAttempt> TokenizeHelper::tokenizeStringIdentifiers(std::string& code) {
+TokenizeAttempt TokenizeHelper::tokenizeStringIdentifiers(char* code) {
     return {};
 }
 
-std::optional<TokenizeAttempt> TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
+TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
     // define punctuators
     std::string punctuator = code.substr(0, 3);
     std::vector<std::string> subString;
@@ -46,6 +46,6 @@ std::optional<TokenizeAttempt> TokenizeHelper::tokenizeKeywordPunctuators(std::s
         }
         punctuator.pop_back();
     }
-    return std::nullopt;
+    return TokenizeAttempt();
 }
 
