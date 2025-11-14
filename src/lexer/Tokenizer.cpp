@@ -12,7 +12,7 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
     int pos = 0;
     while(true) {
         char c = *sourceP;
-        if(c == '\0') { //source has been fully lexed
+        if(c == '\0') {                                                             //success, source has been fully lexed
             tokens.push_back(Token("EOF", "EOF",line,pos));
             return std::pair(tokens, std::nullopt);
         }
@@ -28,6 +28,15 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
             continue;
         }
         TokenizeAttempt attempt = tokenize(sourceP);
-        if(attempt.getToken())
+        if(!attempt.getToken()) {
+            pos += attempt.getCharsLexed();
+            return std::pair(tokens, std::pair(line, pos)); //failure, contains first unlexable char position.
+        }
+        Token token = *attempt.getToken();
+        token.setSourceLine(line);
+        token.setSourceIndex(pos);
+
+        tokens.push_back(*attempt.getToken());
+        pos += attempt.getCharsLexed();
     }
 }
