@@ -22,11 +22,13 @@ int main() {
     std::cout << "Token output done" << std::endl;
     */
     std::string testString = "->Test";
-    std::optional<TokenizeAttempt> test = TokenizeHelper::tokenizeKeywordPunctuators(testString);
-    if (test) {
-        std::cout << *test << std::endl; // Dereferenzieren
-    } else {
-        std::cout << "Kein Token gefunden" << std::endl;
-    }
+    std::string testString1 = "\"Test\"";
+
+    TokenizeAttempt test1 = TokenizeHelper::tokenizeKeywordPunctuators(testString);
+    TokenizeAttempt test2 = TokenizeHelper::tokenizeStringLiterals(testString1);
+
+    std::cout << test1 << std::endl;
+    std::cout << test2 << std::endl;
+
     return 0;
 }

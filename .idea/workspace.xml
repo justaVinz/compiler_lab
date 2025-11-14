@@ -15,13 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="implemented tokenizeKeywordPunctuators and added it to lexer as test">
-      <change afterPath="$PROJECT_DIR$/common/assignments/assignment_C.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/references/compiler_reference.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignments/assignment_AB.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/common/assignments/assignment_AB.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/TokenizeHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helper/TokenizeHelper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +48,12 @@
     &quot;accountId&quot;: &quot;27af3470-09d3-47ef-bb41-b208033095e3&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/helper/TokenizeHelper.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/helper/TokenizeHelper.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/lexer/TokenizeHelper.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/lexer/TokenizeHelper.cpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -72,7 +74,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "lexer",
+    "git-widget-placeholder": "vinzenz",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -131,7 +133,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add .idea to gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="add .idea to gitignore" />
+    <MESSAGE value="updated file structure and added compiler reference and new assignment" />
+    <MESSAGE value="remove optional from TokenizeHelper functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove optional from TokenizeHelper functions" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
