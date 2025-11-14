@@ -5,11 +5,11 @@
 
 #include "structs/TokenizeAttempt.h"
 
-TokenizeAttempt TokenizeHelper::tokenizeStringIdentifiers(std::string& code) {
+TokenizeAttempt TokenizeHelper::tokenizeStringIdentifiers(char* code) {
     return {};
 }
 
-TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
+TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
     // define punctuators
     std::string punctuator = code.substr(0, 3);
     std::vector<std::string> subString;
@@ -46,6 +46,6 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
         }
         punctuator.pop_back();
     }
-    return TokenizeAttempt();
+    return std::nullopt;
 }
 

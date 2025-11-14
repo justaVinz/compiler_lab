@@ -4,17 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppGeneralOptions" type="string" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="add .idea to gitignore">
-      <change afterPath="$PROJECT_DIR$/src/helper/structs/Token.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/helper/structs/Token.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/LexerHelper.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/LexerHelper.h" beforeDir="false" />
+    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="implemented tokenizeKeywordPunctuators and added it to lexer as test">
+      <change afterPath="$PROJECT_DIR$/common/assignments/assignment_C.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/references/compiler_reference.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/assignment_AB.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/common/assignments/assignment_AB.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/TokenizeHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/TokenizeHelper.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +35,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="vinzenz" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,18 +66,30 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "vinzenz",
+    "git-widget-placeholder": "lexer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "editor.preferences.inline.completion",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/lexer" />
+      <recent name="$PROJECT_DIR$/common/references" />
+      <recent name="$PROJECT_DIR$/common/assignments" />
+      <recent name="$PROJECT_DIR$/common" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="lexer.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="lexer.cpp" CONFIG_NAME="lexer.cpp">
       <option name="sourceFile" value="src/lexer/lexer.cpp" />
@@ -80,6 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="C/C++ File.lexer.cpp" />
+        <item itemvalue="C/C++ File.lexer.cpp" />
         <item itemvalue="C/C++ File.lexer.cpp" />
       </list>
     </recent_temporary>
@@ -92,6 +113,7 @@
       <option name="presentableId" value="Default" />
       <updated>1762711527173</updated>
       <workItem from="1762711528147" duration="45000" />
+      <workItem from="1763106661904" duration="1067000" />
     </task>
     <task id="LOCAL-00001" summary="add .idea to gitignore">
       <option name="closed" value="true" />
