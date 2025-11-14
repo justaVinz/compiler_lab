@@ -61,3 +61,4 @@ desktop.ini
 compile_commands.json
 CMakeFiles/
 build.ninja
+.cache/
