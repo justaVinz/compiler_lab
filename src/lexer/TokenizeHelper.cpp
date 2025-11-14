@@ -6,28 +6,31 @@
 #include "../helper/structs/TokenizeAttempt.h"
 
 TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(std::string& code) {
+    std::cout << code[0] << std::endl;
+
     if (code.size() < 2 || code[0] != '"') {
-        std::cout << "test: " << code[0] << std::endl;
-        std::cout << "reached here 1" << std::endl;
         return TokenizeAttempt();
     }
 
     std::string current;
-    int charsLexed = 1;
+    int charsLexed = 0;
     bool escaped = false;
 
-    for (int i = 1; i < code.length(); i++) {
+    current += code[0];
+    charsLexed++;
+
+    for (size_t i = 1; i < code.size(); ++i) {
         char c = code[i];
 
-        // ignore possible string endings
         if (escaped) {
             current += c;
             escaped = false;
-        // setup for ignoring potential string endings
         } else if (c == '\\') {
             escaped = true;
+            current += c;
         } else if (c == '"') {
-            // Unescaped, end of string
+            current += c;
+
             Token token;
             token.setTokenType("string-literal");
             token.setValue(current);
@@ -36,14 +39,13 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(std::string& code) {
             attempt.setToken(token);
             attempt.setCharsLexed(i + 1);
 
-            std::cout << "reached here 2" << std::endl;
             return attempt;
         } else {
             current += c;
         }
+
         charsLexed++;
     }
-    std::cout << "reached here" << std::endl;
     return TokenizeAttempt();
 }
 
