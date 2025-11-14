@@ -7,17 +7,18 @@
 #include <iosfwd>
 
 #include "Token.h"
+#include <optional>
 
 
 class TokenizeAttempt {
 private:
-    Token token;
+    std::optional<Token> token;
     int charsLexed;
 public:
     TokenizeAttempt(Token token, int charsLexed);
     TokenizeAttempt();
 
-    Token getToken() const { return token; }
+    std::optional<Token> getToken() const { return token; }
     void setToken(const Token &t) { token = t; }
     int getCharsLexed() const { return charsLexed; }
     void setCharsLexed(int chars_lexed) { charsLexed = chars_lexed; }
