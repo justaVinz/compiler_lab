@@ -1,0 +1,17 @@
+#ifndef COMPILER_LAB_TOKENIZEHELPER_H
+#define COMPILER_LAB_TOKENIZEHELPER_H
+#include <string>
+
+#include "../helper/structs/TokenizeAttempt.h"
+
+
+class TokenizeHelper {
+public:
+    static TokenizeAttempt tokenizeStringLiterals(std::string& identString);
+    static TokenizeAttempt tokenizeKeywordPunctuators(std::string& punctString);
+    static TokenizeAttempt tokenizeCharacterConstants(std::string& punctString);
+    static TokenizeAttempt decimalConstants(std::string& punctString);
+};
+
+
+#endif //COMPILER_LAB_TOKENIZEHELPER_H
