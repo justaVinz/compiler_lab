@@ -89,9 +89,6 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
     return TokenizeAttempt();
 }
 
-bool isDigit_orIdentifierNonDigit(char c) {
-    return ('0'<= c && c <= '9') || isIdentifierNonDigit(c);
-}
 bool isIdentifierNonDigit(char c) {
     return (
         c == '_'
@@ -99,6 +96,11 @@ bool isIdentifierNonDigit(char c) {
         || ('A' <= c && c <= 'Z')
     );
 }
+
+bool isDigit_orIdentifierNonDigit(char c) {
+    return ('0'<= c && c <= '9') || isIdentifierNonDigit(c);
+}
+
 
 TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(std::string& code) {
     if (code.size() < 3 || code[0] != '\'') {

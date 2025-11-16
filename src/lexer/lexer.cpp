@@ -3,7 +3,7 @@
 #include <string>
 #include <optional>
 
-#include "../helper/TokenizeHelper.h"
+#include "./TokenizeHelper.h"
 #include "../helper/structs/TokenizeAttempt.h"
 #include "./../helper/structs/Token.h"
 
