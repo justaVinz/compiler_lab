@@ -10,7 +10,7 @@ public:
     static TokenizeAttempt tokenizeStringLiterals(char* codePointer);
     static TokenizeAttempt tokenizeKeywordPunctuators(char* codePointer);
     static TokenizeAttempt tokenizeCharacterConstants(char* punctString);
-    static TokenizeAttempt decimalConstants(char* punctString);
+    static TokenizeAttempt tokenizeDecimalConstants(char* punctString);
 };
 
 

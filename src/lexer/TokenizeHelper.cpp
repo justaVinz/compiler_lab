@@ -168,7 +168,7 @@ TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(char* code) {
 }
 
 
-TokenizeAttempt TokenizeHelper::decimalConstants(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeDecimalConstants(char* code) {
 
     if (code == nullptr) {
         return TokenizeAttempt();

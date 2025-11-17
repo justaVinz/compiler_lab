@@ -23,13 +23,22 @@ int main() {
     */
     char testString[] = "->Test";
     char testString1[] = "\"bla\\n\"";
+
+    char testString3[] = "'\\n'";
+    char testString4[] = "0";
 ;
 
     TokenizeAttempt test1 = TokenizeHelper::tokenizeKeywordPunctuators(testString);
     TokenizeAttempt test2 = TokenizeHelper::tokenizeStringLiterals(testString1);
 
+    TokenizeAttempt test3 = TokenizeHelper::tokenizeCharacterConstants(testString3);
+    TokenizeAttempt test4 = TokenizeHelper::tokenizeDecimalConstants(testString4);
+
     std::cout << test1 << std::endl;
     std::cout << test2 << std::endl;
+
+    std::cout << test3 << std::endl;
+    std::cout << test4 << std::endl;
 
     return 0;
 }
