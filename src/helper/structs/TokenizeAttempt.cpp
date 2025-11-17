@@ -13,7 +13,7 @@ TokenizeAttempt::TokenizeAttempt()
 
 std::ostream& operator<<(std::ostream& os, const TokenizeAttempt& attempt) {
     os << "TokenizeAttempt("
-       << attempt.getToken() << ", "
+       << (attempt.getToken() ? *(attempt.getToken()) : Token{}) << ", "
        << attempt.getCharsLexed() << ")";
     return os;
 }

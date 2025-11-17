@@ -5,10 +5,8 @@
 
 #include "../helper/structs/TokenizeAttempt.h"
 
-TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(std::string& code) {
-    std::cout << code[0] << std::endl;
-
-    if (code.size() < 2 || code[0] != '"') {
+TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
+    if (code == nullptr || code[0] != '"') {
         return TokenizeAttempt();
     }
 
@@ -19,7 +17,9 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(std::string& code) {
     current += code[0];
     charsLexed++;
 
-    for (size_t i = 1; i < code.size(); ++i) {
+    size_t len = strlen(code);
+
+    for (size_t i = 1; i < len; ++i) {
         char c = code[i];
 
         if (escaped) {
@@ -49,10 +49,18 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(std::string& code) {
     return TokenizeAttempt();
 }
 
-TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
-    // define punctuators
-    std::string punctuator = code.substr(0, 3);
-    std::vector<std::string> subString;
+
+TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
+    if (code == nullptr || code[0] == '\0') {
+        return TokenizeAttempt();
+    }
+
+    std::string punctuator;
+    int code_len = strlen(code);
+    int max_len = (code_len < 3) ? code_len : 3;
+    for (int i = 0; i < max_len; i++) {
+        punctuator += code[i];
+    }
 
     std::vector<std::string> punctuators = {
         "[", "]", "(", ")", "{", "}", ".", "->",
@@ -67,17 +75,17 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
 
     int lexedChars = 0;
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < max_len; i++) {
         lexedChars++;
-        for (std::string s : punctuators) {
-            if(punctuator == s) {
+        for (const std::string& s : punctuators) {
+            if (punctuator == s) {
                 // initialize new token
-                Token found = Token();
+                Token found;
                 found.setTokenType("punctuator");
                 found.setValue(punctuator);
 
                 // initialize new TokenizeAttempt
-                TokenizeAttempt validAttempt = TokenizeAttempt();
+                TokenizeAttempt validAttempt;
                 validAttempt.setToken(found);
                 validAttempt.setCharsLexed(lexedChars);
 
@@ -86,21 +94,9 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(std::string& code) {
         }
         punctuator.pop_back();
     }
+
     return TokenizeAttempt();
 }
-
-bool isIdentifierNonDigit(char c) {
-    return (
-        c == '_'
-        || ('a' <= c && c <= 'z')
-        || ('A' <= c && c <= 'Z')
-    );
-}
-
-bool isDigit_orIdentifierNonDigit(char c) {
-    return ('0'<= c && c <= '9') || isIdentifierNonDigit(c);
-}
-
 
 TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(char* code) {
     if (code == nullptr) {
@@ -215,3 +211,5 @@ TokenizeAttempt TokenizeHelper::decimalConstants(char* code) {
 
     return attempt;
 }
+
+

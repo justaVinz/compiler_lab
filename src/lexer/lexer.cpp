@@ -3,7 +3,7 @@
 #include <string>
 #include <optional>
 
-#include "./TokenizeHelper.h"
+#include "TokenizeHelper.h"
 #include "../helper/structs/TokenizeAttempt.h"
 #include "./../helper/structs/Token.h"
 
@@ -21,12 +21,15 @@ int main() {
     std::cout << attempt << std::endl;
     std::cout << "Token output done" << std::endl;
     */
-    std::string testString = "->Test";
-    std::optional<TokenizeAttempt> test = TokenizeHelper::tokenizeKeywordPunctuators(testString);
-    if (test) {
-        std::cout << *test << std::endl; // Dereferenzieren
-    } else {
-        std::cout << "Kein Token gefunden" << std::endl;
-    }
+    char testString[] = "->Test";
+    char testString1[] = "\"bla\\n\"";
+;
+
+    TokenizeAttempt test1 = TokenizeHelper::tokenizeKeywordPunctuators(testString);
+    TokenizeAttempt test2 = TokenizeHelper::tokenizeStringLiterals(testString1);
+
+    std::cout << test1 << std::endl;
+    std::cout << test2 << std::endl;
+
     return 0;
 }
