@@ -21,8 +21,8 @@ int main() {
     std::cout << attempt << std::endl;
     std::cout << "Token output done" << std::endl;
     */
-    std::string testString = "->Test";
-    std::string testString1 = "\"bla\\n\"";
+    char testString[] = "->Test";
+    char testString1[] = "\"bla\\n\"";
 ;
 
     TokenizeAttempt test1 = TokenizeHelper::tokenizeKeywordPunctuators(testString);

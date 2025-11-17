@@ -14,8 +14,11 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="implemented tokenizeKeywordPunctuators and added it to lexer as test">
-      <change beforePath="$PROJECT_DIR$/src/helper/TokenizeHelper.h" beforeDir="false" />
+    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="added reading quotes">
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/structs/TokenizeAttempt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/structs/TokenizeAttempt.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/structs/TokenizeAttempt.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/structs/TokenizeAttempt.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.cpp" afterDir="false" />
@@ -31,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vinzenz" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -104,6 +107,7 @@
         <item itemvalue="C/C++ File.lexer.cpp" />
         <item itemvalue="C/C++ File.lexer.cpp" />
         <item itemvalue="C/C++ File.lexer.cpp" />
+        <item itemvalue="C/C++ File.lexer.cpp" />
       </list>
     </recent_temporary>
   </component>
@@ -116,6 +120,7 @@
       <updated>1762711527173</updated>
       <workItem from="1762711528147" duration="45000" />
       <workItem from="1763106661904" duration="1067000" />
+      <workItem from="1763376865058" duration="682000" />
     </task>
     <task id="LOCAL-00001" summary="add .idea to gitignore">
       <option name="closed" value="true" />

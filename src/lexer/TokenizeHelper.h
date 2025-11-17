@@ -8,8 +8,8 @@
 
 class TokenizeHelper {
 public:
-    static TokenizeAttempt tokenizeStringLiterals(std::string& identString);
-    static TokenizeAttempt tokenizeKeywordPunctuators(std::string& punctString);
+    static TokenizeAttempt tokenizeStringLiterals(char* codePointer);
+    static TokenizeAttempt tokenizeKeywordPunctuators(char* codePointer);
 };
 
 
