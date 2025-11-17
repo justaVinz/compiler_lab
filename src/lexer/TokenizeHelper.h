@@ -9,8 +9,8 @@ class TokenizeHelper {
 public:
     static TokenizeAttempt tokenizeStringLiterals(std::string& identString);
     static TokenizeAttempt tokenizeKeywordPunctuators(std::string& punctString);
-    static TokenizeAttempt tokenizeCharacterConstants(std::string& punctString);
-    static TokenizeAttempt decimalConstants(std::string& punctString);
+    static TokenizeAttempt tokenizeCharacterConstants(char* punctString);
+    static TokenizeAttempt decimalConstants(char* punctString);
 };
 
 
