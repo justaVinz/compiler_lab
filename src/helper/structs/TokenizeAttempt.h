@@ -7,6 +7,7 @@
 #include <iosfwd>
 
 #include "Token.h"
+#include <optional>
 
 
 class TokenizeAttempt {
