@@ -5,7 +5,7 @@
 
 #include "../helper/structs/TokenizeAttempt.h"
 
-TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(const char* code) {
     if (code == nullptr || code[0] != '"') {
         return TokenizeAttempt();
     }
@@ -50,7 +50,7 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
 }
 
 
-TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
     if (code == nullptr || code[0] == '\0') {
         return TokenizeAttempt();
     }
@@ -98,7 +98,7 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
     return TokenizeAttempt();
 }
 
-TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(const char* code) {
     if (code == nullptr) {
         return TokenizeAttempt();
     }
@@ -168,7 +168,7 @@ TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(char* code) {
 }
 
 
-TokenizeAttempt TokenizeHelper::tokenizeDecimalConstants(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeDecimalConstants(const char* code) {
 
     if (code == nullptr) {
         return TokenizeAttempt();
@@ -212,4 +212,26 @@ TokenizeAttempt TokenizeHelper::tokenizeDecimalConstants(char* code) {
     return attempt;
 }
 
+bool isIdentifierNonDigit(char c) {
+    return (
+        c == '_'
+        || ('a' <= c && c <= 'z')
+        || ('A' <= c && c <= 'Z')
+    );
+}
+bool isDigit_orIdentifierNonDigit(char c) {
+    return ('0'<= c && c <= '9') || isIdentifierNonDigit(c);
+}
 
+TokenizeAttempt TokenizeHelper::tokenizeIdentifier(const char* str) {
+    if(!isIdentifierNonDigit(*str)) {
+        return TokenizeAttempt(); //failure
+    }
+    int n = 1;
+    while(isDigit_orIdentifierNonDigit(str[n])) {
+        n++;
+    }
+    std::string value(str, n);
+    Token token = Token("identifier", value, 0, 0);
+    return TokenizeAttempt(token, n); //success
+}

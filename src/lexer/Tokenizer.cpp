@@ -1,8 +1,30 @@
 # include "Tokenizer.h"
 #include <cstddef>
+# include "TokenizeHelper.h"
 #include <utility>
-TokenizeAttempt Tokenizer::tokenize(const char* source) {
 
+
+void updateCandidateTokenizeAttempt(TokenizeAttempt* dest, TokenizeAttempt src) {
+    if(src.getToken() && !dest->getToken()){ //First time lexing a token, we replace 
+        *dest = src;
+        return;
+    }
+    if(!src.getToken() && dest->getToken()) { //We had a token, new function doesn't produce one, abort
+        return;
+    }
+    if(src.getCharsLexed() > dest->getCharsLexed()) { //both or neither have a token, charsLexed determines what happens next.
+        *dest = src;
+        return;
+    }
+}
+TokenizeAttempt Tokenizer::tokenize(const char* src) {
+    TokenizeAttempt bestTokenizeAttempt = TokenizeAttempt(); //start with no tokens, then go through the functions
+    updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeKeywordPunctuators(src)); //keywords first
+    updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeCharacterConstants(src));
+    updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeDecimalConstants(src));
+    updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeIdentifier(src));
+    updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeStringLiterals(src));
+    return bestTokenizeAttempt;
 }
 
 std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tokenizeSeq(std::string source) {

@@ -7,10 +7,11 @@
 
 class TokenizeHelper {
 public:
-    static TokenizeAttempt tokenizeStringLiterals(char* codePointer);
-    static TokenizeAttempt tokenizeKeywordPunctuators(char* codePointer);
-    static TokenizeAttempt tokenizeCharacterConstants(char* punctString);
-    static TokenizeAttempt tokenizeDecimalConstants(char* punctString);
+    static TokenizeAttempt tokenizeStringLiterals(const char* codePointer);
+    static TokenizeAttempt tokenizeKeywordPunctuators(const char* codePointer);
+    static TokenizeAttempt tokenizeCharacterConstants(const char* punctString);
+    static TokenizeAttempt tokenizeDecimalConstants(const char* punctString);
+    static TokenizeAttempt tokenizeIdentifier(const char* code);
 };
 
 
