@@ -5,11 +5,11 @@
 
 #include "../helper/structs/TokenizeAttempt.h"
 
-TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(const char* code) {
     if (!code || *code != '"') return TokenizeAttempt();
 
-    char* start = code;
-    char* ptr = code + 1;
+    const char* start = code;
+    const char* ptr = code + 1;
     bool escaped = false;
 
     while (*ptr) {
@@ -33,7 +33,7 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
     return TokenizeAttempt();
 }
 
-TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
+TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
     if (code == nullptr || code[0] == '\0') {
         TokenizeAttempt attempt;
         attempt.setCharsLexed(0);
