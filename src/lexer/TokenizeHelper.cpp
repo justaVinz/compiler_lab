@@ -81,4 +81,140 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
     return TokenizeAttempt();
 }
 
+TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(const char* code) {
+    if (code == nullptr) {
+        return TokenizeAttempt();
+    }
 
+    if (code[0] != '\'') {
+        return TokenizeAttempt();
+    }
+
+    std::string current;
+    bool escaped = false;
+
+    current += code[0];
+    int charsLexed = 1;
+
+    size_t i = 1;
+    while (code[i] != '\0') {
+        char c = code[i];
+
+        if (escaped) {
+            if (!(c == 'n' || c == 't' || c == 'r' || c == 'b' ||
+            c == 'f' || c == 'v' || c == 'a' ||
+            c == '\\' || c == '\'' || c == '\"' || c == '?')) {
+                // invalid escape sequence
+                break;
+            }
+            current += c;
+            escaped = false;
+        } else if (c == '\\') {
+            if(charsLexed != 1){
+                // escape must be at set position
+                break;
+            }
+            escaped = true;
+            current += c;
+        } else if (c == '\'') {
+            if(charsLexed != 2 && charsLexed != 3){
+                // closing quotes must be at set position
+                break;
+            }
+            current += c;
+            ++i;
+            ++charsLexed;
+
+            Token token;
+            token.setTokenType("character-constant");
+            token.setValue(current);
+
+            TokenizeAttempt attempt;
+            attempt.setToken(token);
+            attempt.setCharsLexed(charsLexed);
+            return attempt;
+        } else {
+            if(charsLexed != 1 || c == '\n'){
+                // normal characters should be at fixed position
+                break;
+            }
+            current += c;
+        }
+
+        ++i;
+        ++charsLexed;
+    }
+
+    TokenizeAttempt attempt;
+    attempt.setCharsLexed(charsLexed);
+    return attempt;
+}
+
+
+TokenizeAttempt TokenizeHelper::tokenizeDecimalConstants(const char* code) {
+
+    if (code == nullptr) {
+        return TokenizeAttempt();
+    }
+
+    std::string current;
+    int charsLexed = 0;
+
+    size_t i = 0;
+    while (code[i] != '\0') {
+        char c = code[i];
+        if(i == 1){
+            if (code[0] == '0' && ('0' <= c && c <= '9')) {
+                TokenizeAttempt attempt;
+                attempt.setCharsLexed(charsLexed);
+
+                return attempt;
+            }
+        }
+        if ('0' <= c && c <= '9') {
+            current += c;
+            charsLexed++;
+        } else {
+            break;
+        }
+        ++i;
+    }
+
+    if (charsLexed == 0) {
+        return TokenizeAttempt();
+    }
+
+    Token token;
+    token.setTokenType("decimal-constant");
+    token.setValue(current);
+
+    TokenizeAttempt attempt;
+    attempt.setToken(token);
+    attempt.setCharsLexed(charsLexed);
+
+    return attempt;
+}
+
+bool isIdentifierNonDigit(char c) {
+    return (
+        c == '_'
+        || ('a' <= c && c <= 'z')
+        || ('A' <= c && c <= 'Z')
+    );
+}
+bool isDigit_orIdentifierNonDigit(char c) {
+    return ('0'<= c && c <= '9') || isIdentifierNonDigit(c);
+}
+
+TokenizeAttempt TokenizeHelper::tokenizeIdentifier(const char* str) {
+    if(!isIdentifierNonDigit(*str)) {
+        return TokenizeAttempt(); //failure
+    }
+    int n = 1;
+    while(isDigit_orIdentifierNonDigit(str[n])) {
+        n++;
+    }
+    std::string value(str, n);
+    Token token = Token("identifier", value, 0, 0);
+    return TokenizeAttempt(token, n); //success
+}
