@@ -23,7 +23,9 @@ int main() {
     */
     char testString[] = "->Test";
     char testString1[] = "\"bla\\n\"";
-;
+
+    TokenizeAttempt test = TokenizeAttempt();
+    std::cout << test << std::endl;
 
     TokenizeAttempt test1 = TokenizeHelper::tokenizeKeywordPunctuators(testString);
     TokenizeAttempt test2 = TokenizeHelper::tokenizeStringLiterals(testString1);

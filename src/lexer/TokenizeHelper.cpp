@@ -6,60 +6,44 @@
 #include "../helper/structs/TokenizeAttempt.h"
 
 TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(char* code) {
-    if (code == nullptr || code[0] != '"') {
-        return TokenizeAttempt();
-    }
+    if (!code || *code != '"') return TokenizeAttempt();
 
-    std::string current;
-    int charsLexed = 0;
+    char* start = code;
+    char* ptr = code + 1;
     bool escaped = false;
 
-    current += code[0];
-    charsLexed++;
-
-    size_t len = strlen(code);
-
-    for (size_t i = 1; i < len; ++i) {
-        char c = code[i];
-
+    while (*ptr) {
         if (escaped) {
-            current += c;
             escaped = false;
-        } else if (c == '\\') {
+        } else if (*ptr == '\\') {
             escaped = true;
-            current += c;
-        } else if (c == '"') {
-            current += c;
-
+        } else if (*ptr == '"') {
+            std::string value(start, ptr - start + 1);
             Token token;
             token.setTokenType("string-literal");
-            token.setValue(current);
+            token.setValue(value);
 
             TokenizeAttempt attempt;
             attempt.setToken(token);
-            attempt.setCharsLexed(i + 1);
-
+            attempt.setCharsLexed(ptr - start + 1);
             return attempt;
-        } else {
-            current += c;
         }
-
-        charsLexed++;
+        ++ptr;
     }
     return TokenizeAttempt();
 }
 
-
 TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
     if (code == nullptr || code[0] == '\0') {
-        return TokenizeAttempt();
+        TokenizeAttempt attempt;
+        attempt.setCharsLexed(0);
+        return attempt;
     }
 
-    std::string punctuator;
-    int code_len = strlen(code);
-    int max_len = (code_len < 3) ? code_len : 3;
+    std::string toCheck;
+    int max_len = 3;
     for (int i = 0; i < max_len; i++) {
-        punctuator += code[i];
+        toCheck += code[i];
     }
 
     std::vector<std::string> punctuators = {
@@ -75,14 +59,14 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
 
     int lexedChars = 0;
 
-    for (int i = 0; i < max_len; i++) {
+    for (int i = max_len; i > 0; i++) {
         lexedChars++;
         for (const std::string& s : punctuators) {
-            if (punctuator == s) {
+            if (toCheck == s) {
                 // initialize new token
                 Token found;
                 found.setTokenType("punctuator");
-                found.setValue(punctuator);
+                found.setValue(toCheck);
 
                 // initialize new TokenizeAttempt
                 TokenizeAttempt validAttempt;
@@ -92,9 +76,8 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(char* code) {
                 return validAttempt;
             }
         }
-        punctuator.pop_back();
+        toCheck.pop_back();
     }
-
     return TokenizeAttempt();
 }
 
