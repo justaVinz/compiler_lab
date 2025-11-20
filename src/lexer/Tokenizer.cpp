@@ -1,11 +1,14 @@
 # include "Tokenizer.h"
 #include <cstddef>
+#include <iostream>
+#include <ostream>
+
 # include "TokenizeHelper.h"
 #include <utility>
 
 
 void updateCandidateTokenizeAttempt(TokenizeAttempt* dest, TokenizeAttempt src) {
-    if(src.getToken() && !dest->getToken()){ //First time lexing a token, we replace 
+    if(src.getToken() && !dest->getToken()){ //First time lexing a token, we replace
         *dest = src;
         return;
     }
@@ -32,33 +35,43 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
     std::vector<Token> tokens;
     int line = 0;
     int pos = 0;
+
     while(true) {
         char c = *sourceP;
-        if(c == '\0') {                                                             //success, source has been fully lexed
-            tokens.push_back(Token("EOF", "EOF",line,pos));
-            return std::pair(tokens, std::nullopt);
+
+        if(c == '\0') {
+            tokens.push_back(Token("EOF", "EOF", line, pos));
+            return {tokens, std::optional<std::pair<int,int>>{}};
         }
-        if(c == '\n') { //new line in source
+
+        if(c == '\n') {
             line++;
             pos = 0;
             sourceP++;
             continue;
         }
-        if(std::isspace(c)) { //checks whitespace
+        else if(std::isspace(c)) { // whitespace außer '\n'
             pos++;
             sourceP++;
             continue;
         }
+
         TokenizeAttempt attempt = tokenize(sourceP);
+
         if(!attempt.getToken()) {
-            pos += attempt.getCharsLexed();
-            return std::pair(tokens, std::pair(line, pos)); //failure, contains first unlexable char position.
+            int lexed = attempt.getCharsLexed();
+            pos += lexed;
+            sourceP += lexed;
+            return {tokens, std::optional<std::pair<int,int>>{ {line, pos} }};
         }
+
+        int lexed = attempt.getCharsLexed();
         Token token = *attempt.getToken();
         token.setSourceLine(line);
         token.setSourceIndex(pos);
 
-        tokens.push_back(*attempt.getToken());
-        pos += attempt.getCharsLexed();
+        tokens.push_back(token);
+        pos += lexed;
+        sourceP += lexed;
     }
 }

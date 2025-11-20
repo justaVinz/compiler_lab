@@ -12,5 +12,8 @@ std::string Utils::readSourceCode(const std::string& path) {
 
     std::stringstream buffer;
     buffer << file.rdbuf();
-    return buffer.str();
+
+    std::string content = buffer.str();
+    content += '\0';
+    return content;
 };

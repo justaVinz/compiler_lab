@@ -59,7 +59,7 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
 
     int lexedChars = 0;
 
-    for (int i = max_len; i > 0; i++) {
+    for (int i = max_len; i > 0; i--) {
         lexedChars++;
         for (const std::string& s : punctuators) {
             if (toCheck == s) {

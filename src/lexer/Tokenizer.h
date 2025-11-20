@@ -8,7 +8,7 @@
 class Tokenizer {
 public:
     static TokenizeAttempt tokenize(const char* source);
-    std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> tokenizeSeq(std::string source);
+    static std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> tokenizeSeq(std::string source);
 };
 
 # endif //COMPILER_LAB_TOKENIZER_H

@@ -10,11 +10,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Place built executables in build/bin/
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+set(MAIN_FILE src/main.cpp)
+
 # Automatically collect all source files from src/
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
+list(REMOVE_ITEM SOURCES ${MAIN_FILE})
 
 # Define the executable name (MUST be 'c4' per requirements)
-add_executable(c4 ${SOURCES})
+add_executable(c4 ${MAIN_FILE} ${SOURCES})
 
 # Optional: organize IDEs and editors
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src FILES ${SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src FILES ${MAIN_FILE} ${SOURCES})

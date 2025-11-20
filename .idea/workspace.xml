@@ -8,16 +8,35 @@
     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppGeneralOptions" type="string" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated />
+    <generated>
+      <config projectName="compiler_lab" targetName="all" />
+      <config projectName="compiler_lab" targetName="cmake_force" />
+      <config projectName="compiler_lab" targetName="help" />
+      <config projectName="compiler_lab" targetName="preinstall" />
+      <config projectName="compiler_lab" targetName="depend" />
+      <config projectName="compiler_lab" targetName="rebuild_cache" />
+      <config projectName="compiler_lab" targetName="c4" />
+      <config projectName="compiler_lab" targetName="cmake_check_build_system" />
+      <config projectName="compiler_lab" targetName="default_target" />
+      <config projectName="compiler_lab" targetName="edit_cache" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="added optional to TokenizeAttempt and refactored TokenizeHelper">
+    <list default="true" id="397f8a7b-0fce-4ec7-9beb-10097888dff6" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/src/lexer/Lexer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/Utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/Utils.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/lexer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/Tokenizer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Tokenizer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/Tokenizer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Tokenizer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer/lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Lexer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +45,11 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -48,10 +72,41 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/helper/structs/TokenizeAttempt.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/helper/structs/TokenizeAttempt.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/lexer/TokenizeHelper.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/vinzenz.brehme/CLionProjects/compiler_lab/compiler_lab/src/lexer/TokenizeHelper.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/helper/structs/Token.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/helper/structs/TokenizeAttempt.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/Lexer.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/TokenizeHelper.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/TokenizeHelper.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/Tokenizer.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lexer/Tokenizer.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main.cpp" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="compiler_lab" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="compiler_lab" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -91,13 +146,81 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="C/C++ File.lexer.cpp">
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="all" CONFIG_NAME="all" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="c4" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="c4" CONFIG_NAME="c4" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cmake_check_build_system" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="cmake_check_build_system" CONFIG_NAME="cmake_check_build_system" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cmake_force" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="cmake_force" CONFIG_NAME="cmake_force" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="default_target" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="default_target" CONFIG_NAME="default_target" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="depend" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="depend" CONFIG_NAME="depend" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="edit_cache" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="edit_cache" CONFIG_NAME="edit_cache" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="help" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="help" CONFIG_NAME="help" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="preinstall" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="preinstall" CONFIG_NAME="preinstall" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rebuild_cache" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="rebuild_cache" CONFIG_NAME="rebuild_cache" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="lexer.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="compiler_lab" TARGET_NAME="lexer.cpp" CONFIG_NAME="lexer.cpp">
       <option name="sourceFile" value="src/lexer/lexer.cpp" />
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="C/C++ File.lexer.cpp" />
+      <item itemvalue="Native Application.all" />
+      <item itemvalue="Native Application.c4" />
+      <item itemvalue="Native Application.cmake_check_build_system" />
+      <item itemvalue="Native Application.cmake_force" />
+      <item itemvalue="Native Application.default_target" />
+      <item itemvalue="Native Application.depend" />
+      <item itemvalue="Native Application.edit_cache" />
+      <item itemvalue="Native Application.help" />
+      <item itemvalue="Native Application.preinstall" />
+      <item itemvalue="Native Application.rebuild_cache" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="C/C++ File.lexer.cpp" />
@@ -120,6 +243,7 @@
       <workItem from="1763376865058" duration="682000" />
       <workItem from="1763399000813" duration="3284000" />
       <workItem from="1763485475667" duration="2756000" />
+      <workItem from="1763649983828" duration="1872000" />
     </task>
     <task id="LOCAL-00001" summary="add .idea to gitignore">
       <option name="closed" value="true" />
