@@ -7,8 +7,8 @@
 
 class Tokenizer {
 public:
-    static TokenizeAttempt tokenize(const char* source);
-    static std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> tokenizeSeq(std::string source);
+    static TokenizeAttempt tokenize(const char* source, bool isVerbose);
+    static std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> tokenizeSeq(std::string source, bool isVerbose);
 };
 
 # endif //COMPILER_LAB_TOKENIZER_H

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <vector>
 
 #include "../helper/structs/TokenizeAttempt.h"
 
@@ -57,10 +58,10 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
         ","
     };
 
-    int lexedChars = 0;
+    //int lexedChars = 0;
 
     for (int i = max_len; i > 0; i--) {
-        lexedChars++;
+        //lexedChars++;
         for (const std::string& s : punctuators) {
             if (toCheck == s) {
                 // initialize new token
@@ -71,7 +72,7 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
                 // initialize new TokenizeAttempt
                 TokenizeAttempt validAttempt;
                 validAttempt.setToken(found);
-                validAttempt.setCharsLexed(lexedChars);
+                validAttempt.setCharsLexed(i);
 
                 return validAttempt;
             }

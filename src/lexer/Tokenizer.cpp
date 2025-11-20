@@ -20,17 +20,20 @@ void updateCandidateTokenizeAttempt(TokenizeAttempt* dest, TokenizeAttempt src) 
         return;
     }
 }
-TokenizeAttempt Tokenizer::tokenize(const char* src) {
+TokenizeAttempt Tokenizer::tokenize(const char* src, bool isVerbose) {
     TokenizeAttempt bestTokenizeAttempt = TokenizeAttempt(); //start with no tokens, then go through the functions
     updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeKeywordPunctuators(src)); //keywords first
     updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeCharacterConstants(src));
     updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeDecimalConstants(src));
     updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeIdentifier(src));
     updateCandidateTokenizeAttempt(&bestTokenizeAttempt, TokenizeHelper::tokenizeStringLiterals(src));
+    if(isVerbose)
+        std::cout << bestTokenizeAttempt << std::endl;
     return bestTokenizeAttempt;
 }
 
-std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tokenizeSeq(std::string source) {
+
+std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tokenizeSeq(std::string source, bool isVerbose) {
     const char* sourceP = source.c_str();
     std::vector<Token> tokens;
     int line = 0;
@@ -56,7 +59,7 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
             continue;
         }
 
-        TokenizeAttempt attempt = tokenize(sourceP);
+        TokenizeAttempt attempt = tokenize(sourceP, isVerbose);
 
         if(!attempt.getToken()) {
             int lexed = attempt.getCharsLexed();

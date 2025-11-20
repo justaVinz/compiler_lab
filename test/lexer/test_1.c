@@ -1,2 +1,2 @@
-42 if
-"bla\n"x+
+42  if
+ "bla\n"x+
