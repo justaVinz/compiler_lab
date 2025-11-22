@@ -38,14 +38,60 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
     std::vector<Token> tokens;
     int line = 0;
     int pos = 0;
-
+    int commentState = 0; //0=none, 1=singleline, 2=multiline.
     while(true) {
         char c = *sourceP;
-
-        if(c == '\0') {
+        if(c == '\0') { //End of source code, we are done and successful, unless we are in a comment.
+            if(commentState==2)
+                return std::pair(tokens, std::pair(line,pos));
             tokens.push_back(Token("EOF", "EOF", line, pos));
             return {tokens, std::optional<std::pair<int,int>>{}};
         }
+
+        if(commentState==1) {
+            if(c == '\n') {
+                line++;
+                pos = 0;
+                commentState=0;
+                sourceP++;
+                continue;
+            } else {
+                pos++;
+                sourceP++;
+                continue;
+            }
+        }
+
+        if(commentState==2) {
+            if(c == '*' && *(sourceP+1) == '/') {
+                pos += 2;
+                commentState = 0;
+                sourceP++;
+                continue;
+            } else if(c == '\n') {
+                line++;
+                pos = 0;
+                sourceP++;
+                continue;
+            } else {
+                pos++;
+                sourceP++;
+                continue;
+            }
+        }
+
+
+        if(*sourceP == '/' && *(sourceP+1)=='/') {
+            pos+=2;
+            commentState = 1;
+            continue;
+        }
+        if(*sourceP == '/' && *(sourceP+1)=='*') {
+            pos+=2;
+            commentState = 2;
+            continue;
+        }
+
 
         if(c == '\n') {
             line++;
