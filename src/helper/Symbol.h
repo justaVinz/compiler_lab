@@ -1,0 +1,12 @@
+#pragma once
+#ifndef COMPILER_LAB_SYMBOL_H
+#define COMPILER_LAB_SYMBOL_H
+
+enum Symbol {
+    DUMMY_STATEMENT,
+    DUMMY_EXPRESSION,
+    DUMMY_DECLARATOR,
+    DUMMY
+};
+
+#endif //COMPILER_LAB_SYMBOL_H
