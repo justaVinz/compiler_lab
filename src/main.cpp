@@ -1,4 +1,5 @@
 #include "lexer/Lexer.h"
+#include "parser/parser_test.h"
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -17,6 +18,9 @@ int main(int argc, char** argv) {
 
         run(file, fullPath, true);
         return 0;
+    }
+    if (argc >= 2 && std::string(argv[1]) == "--parser_test") {
+        parser_test();
     }
 
     // --- normaler Compiler-Code ---

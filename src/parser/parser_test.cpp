@@ -4,7 +4,7 @@
 #include "Parser.h"
 #include "../helper/structs/Token.h"
 
-int main() {
+int parser_test() {
     Token t1("IDENT", "x", 1, 1);
     Token t2("PLUS", "+", 1, 2);
     Token t3("IDENT", "y", 1, 3);

@@ -22,11 +22,3 @@ add_executable(c4 ${MAIN_FILE} ${SOURCES})
 # Optional: organize IDEs and editors
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src FILES ${MAIN_FILE} ${SOURCES})
 
-# parser test executable
-file(GLOB_RECURSE PARSER_SOURCES CONFIGURE_DEPENDS
-        src/helper/*.cpp
-        src/lexer/*.cpp
-        src/parser/*.cpp
-)
-list(REMOVE_ITEM PARSER_SOURCES src/parser/parser_test.cpp)  # main in test
-add_executable(parser_test src/parser/parser_test.cpp ${PARSER_SOURCES})
