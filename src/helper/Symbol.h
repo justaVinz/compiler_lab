@@ -6,7 +6,10 @@ enum Symbol {
     DUMMY_STATEMENT,
     DUMMY_EXPRESSION,
     DUMMY_DECLARATOR,
-    DUMMY
+    DUMMY,
+    KEYWORD,
+    LITERAL,
+    TODO
 };
 
 #endif //COMPILER_LAB_SYMBOL_H

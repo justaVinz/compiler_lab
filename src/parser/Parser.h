@@ -2,23 +2,21 @@
 #define COMPILER_LAB_PARSER_H
 #include "../helper/structs/Token.h"
 #include "../helper/structs/Node.h"
-#include <stack>
+#include <vector>
 
 class Parser {
 public:
-    Parser(std::stack<Token> tokensStack, std::stack<Node> nodesStack);
+    Parser(std::vector<Token> remSymbols); //remaining symbols
     Parser();
 
-    Token lookahead(int k);
-    Token consume(); // for terminals
+    Node lookahead(int k);
+    void consume(); // for terminals
 
-    std::stack<Token> getTokens() const { return tokens; }
-    void setTokens(const std::stack<Token> &tokens) { this->tokens = tokens; }
-    std::stack<Node> getNodes() const { return nodes; }
-    void setNodes(const std::stack<Node> &nodes) { this->nodes = nodes; }
+    std::vector<Node> getRemTokens() const { return remSymbols;}
+    std::vector<Node> getParseTree() const { return parseTree;}
 
 private:
-    std::stack<Token> tokens;
-    std::stack<Node> nodes;
+    std::vector<Node> remSymbols;
+    std::vector<Node> parseTree;
 };
 #endif //COMPILER_LAB_PARSER_H

@@ -4,8 +4,8 @@
 
 #include "Node.h"
 
-Node::Node(Symbol type, std::vector<Node> children)
-    : type(std::move(type)), children(std::move(children)) {}
+Node::Node(Symbol type, std::vector<Node> children, std::optional<Token> tok)
+    : type(std::move(type)), children(std::move(children)) , token(tok) {}
 
 Node::Node()
     : type(DUMMY), children() {}

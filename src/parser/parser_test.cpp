@@ -40,7 +40,7 @@ int parser_test() {
     while (!nodeStack.empty()) {
         Node n = nodeStack.top();
         nodeStack.pop();
-        std::cout << "Node with Token: " << n.getToken().getValue() << std::endl;
+        std::cout << "Node with Token: " << n.getToken()->getValue() << std::endl;
     }
 
     return 0;
