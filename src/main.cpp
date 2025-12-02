@@ -1,5 +1,6 @@
 #include "lexer/Lexer.h"
 #include <iostream>
+#include "parser/ParserRunner.h"
 
 int main(int argc, char** argv) {
     if (argc >= 3 && std::string(argv[1]) == "--tokenize") {
@@ -17,6 +18,20 @@ int main(int argc, char** argv) {
 
         run(file, fullPath, true);
         return 0;
+    }
+
+    if (argc >= 3 && std::string(argv[1]) == "--parse") {
+        std::string file = argv[2];
+        std::string fullPath = "test/parser/" + file;
+        bool success = runParser(file, fullPath, false);
+        return success ? 0 : 1;
+    }
+
+    if (argc >= 3 && std::string(argv[1]) == "--parse_verbose") {
+        std::string file = argv[2];
+        std::string fullPath = "test/parser/" + file;
+        bool success = runParser(file, fullPath, true);
+        return success ? 0 : 1;
     }
 
     // --- normaler Compiler-Code ---
