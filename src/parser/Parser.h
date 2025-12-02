@@ -30,17 +30,19 @@ private:
 
     // Grammar helpers
     bool parseExternalDeclaration();
-    bool parseFunctionDefinition(const std::vector<std::string>& declSpecifiers, bool isTypedef);
-    bool parseDeclaration(const std::vector<std::string>& declSpecifiers, bool isTypedef);
-    bool parseDeclarationSpecifiers(std::vector<std::string>& outSpecifiers, bool& isTypedef);
-    bool parseInitDeclaratorList(bool requireInitializer);
-    bool parseInitDeclarator(bool requireInitializer, bool& isFunctionDecl);
+    bool parseTranslationUnit();
+    bool parseFunctionDefinition(const std::vector<std::string>& declSpecifiers);
+    bool parseDeclaration(const std::vector<std::string>& declSpecifiers);
+    bool parseDeclarationSpecifiers(std::vector<std::string>& outSpecifiers);
+    bool parseInitDeclaratorList();
+    bool parseInitDeclarator(bool& isFunctionDecl);
     bool parseDeclarator(bool& isFunction);
     bool parsePointer();
     bool parseDirectDeclarator(bool& isFunction);
     bool parseParameterTypeList();
     bool parseParameterDeclaration();
     bool parseInitializer();
+    bool parseStructSpecifier();
 
     bool parseStatement();
     bool parseLabeledStatement();
@@ -65,4 +67,6 @@ private:
     bool isTypeSpecifier(const Token& token) const;
     bool isTypeQualifier(const Token& token) const;
     bool isStorageClassSpecifier(const Token& token) const;
+    bool startsTypeName();
+    bool parseTypeName();
 };

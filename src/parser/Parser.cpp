@@ -14,15 +14,6 @@ const Token& Parser::current() const {
     return tokens[position];
 }
 
-bool Parser::parse() {
-    bool ok = translationUnit();
-    if (ok && !atEnd()) {
-        setError("Extra tokens after end of translation unit");
-        return false;
-    }
-    return ok && atEnd();
-}
-
 bool Parser::atEnd() const {
     return current().getTokenType() == "EOF";
 }
@@ -81,6 +72,15 @@ bool Parser::parseTranslationUnit() {
         }
     }
     return true;
+}
+
+bool Parser::parse() {
+    bool ok = parseTranslationUnit();
+    if (ok && !atEnd()) {
+        setError("Extra tokens after end of translation unit");
+        return false;
+    }
+    return ok && atEnd();
 }
 
 bool Parser::parseExternalDeclaration() {
