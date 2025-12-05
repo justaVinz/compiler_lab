@@ -6,16 +6,20 @@
 
 class Parser {
 public:
-    Parser(std::vector<Token> remSymbols); //remaining symbols
+    Parser(std::vector<Token> tokens); //remaining symbols
     Parser();
 
-    Node lookahead(int k);
-    void consume(); // for terminals
+    Node peekSymbol(int k);
+    Token peek(int k);
+    void parse();
+    std::optional<Node> parseSymbol();
 
-    std::vector<Node> getRemTokens() const { return remSymbols;}
+    std::vector<Token> getRemTokens() const { return remTokens;}
+    std::vector<Node> getRemSymbols() const {return remSymbols;}
     std::vector<Node> getParseTree() const { return parseTree;}
 
 private:
+    std::vector<Token> remTokens;
     std::vector<Node> remSymbols;
     std::vector<Node> parseTree;
 };

@@ -14,7 +14,8 @@ class Node {
 
 public:
     Node(Symbol type, std::vector<Node> children, std::optional<Token> tok);
-    Node();
+    Node(Symbol type);
+    Node(std::string val);
 
     Symbol getType() const { return type; }
     void setType(Symbol type) { this->type = type; }
@@ -22,6 +23,10 @@ public:
     void setChildren(const std::vector<Node> &children) { this->children = children; }
     std::optional<Token> getToken() const { return token; }
     void setToken(const Token &tok) { token = tok; }
+
+    void addChild(Node child) {
+        children.push_back(child);
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const Node& node);
 };

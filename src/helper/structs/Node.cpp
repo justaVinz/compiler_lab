@@ -7,8 +7,11 @@
 Node::Node(Symbol type, std::vector<Node> children, std::optional<Token> tok)
     : type(std::move(type)), children(std::move(children)) , token(tok) {}
 
-Node::Node()
-    : type(DUMMY), children() {}
+Node::Node(Symbol type)
+    : type(type), children() {}
+
+Node::Node(std::string val)
+    : type(terminal), children(), token(Token("", val, -1, -1)) {}
 
 std::ostream& operator<<(std::ostream& os, const Node& node) {
     os << "Node(Type=" << static_cast<int>(node.type) << ", Children=[";
