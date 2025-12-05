@@ -1,6 +1,4 @@
 #include "Parser.h"
-
-#include <vcruntime_typeinfo.h>
 #include <vector>
 #include "../helper/structs/Node.h"
 #include "../helper/structs/Token.h"

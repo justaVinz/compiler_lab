@@ -35,14 +35,13 @@ TokenizeAttempt TokenizeHelper::tokenizeStringLiterals(const char* code) {
 }
 
 TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
-    if (code == nullptr || code[0] == '\0') {
-        TokenizeAttempt attempt;
-        attempt.setCharsLexed(0);
-        return attempt;
+    int max_len;
+    for(max_len=0;max_len<=10;max_len++) {
+        if(code[max_len] == '\0')
+            break;
     }
 
     std::string toCheck;
-    int max_len = 3;
     for (int i = 0; i < max_len; i++) {
         toCheck += code[i];
     }
@@ -55,18 +54,27 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
         "^", "|", "&&", "||",
         "?", ":", ";", "...",
         "=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", "&=", "^=", "|=",
-        ","
+        ",",
+        "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
+        "else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long",
+        "register", "restrict", "return", "short", "signed", "sizeof", "static", "struct",
+        "switch", "typedef", "union", "unsigned", "void", "volatile", "while",
+        "_Bool", "_Complex", "_Imaginary"
     };
 
     //int lexedChars = 0;
 
     for (int i = max_len; i > 0; i--) {
         //lexedChars++;
+        int index = 0;
         for (const std::string& s : punctuators) {
             if (toCheck == s) {
                 // initialize new token
                 Token found;
                 found.setTokenType("punctuator");
+                if(index > 45) {
+                    found.setTokenType("keyword");
+                }
                 found.setValue(toCheck);
 
                 // initialize new TokenizeAttempt
@@ -76,10 +84,12 @@ TokenizeAttempt TokenizeHelper::tokenizeKeywordPunctuators(const char* code) {
 
                 return validAttempt;
             }
+            index++;
         }
         toCheck.pop_back();
     }
-    return TokenizeAttempt();
+    return TokenizeAttempt();   //There is no need to look at how many tokens it could lex if it can't lex a word since a prefix of a punctuator is a punctuator
+                                //and a prefix of a keyword is an identifier.
 }
 
 TokenizeAttempt TokenizeHelper::tokenizeCharacterConstants(const char* code) {
