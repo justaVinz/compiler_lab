@@ -8,10 +8,11 @@ class Parser {
 public:
     Parser(std::vector<Token> tokens); //remaining symbols
     Parser();
+    static void run(const std::string& fileName, const std::string& path, bool isVerbose);
 
     Node peekSymbol(int k);
     Token peek(int k);
-    void parse();
+    void parse(bool isVerbose);
     std::optional<Node> parseSymbol();
 
     std::vector<Token> getRemTokens() const { return remTokens;}

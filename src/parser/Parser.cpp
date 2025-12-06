@@ -6,6 +6,8 @@
 #include "../helper/structs/Token.h"
 #include "../helper/Symbol.h"
 #include <assert.h>
+#include "../helper/Utils.h"
+#include "../lexer/Tokenizer.h"
 
 
 // Constructors
@@ -27,13 +29,35 @@ Token Parser::peek(int k) {
     return remTokens.at(remSymbols.size()-k-1);
 }
 
-void Parser::parse() {
+void Parser::run(const std::string& fileName, const std::string& path, bool isVerbose) { //This is a static method, just to be clear
+        std::string fullPath = "test/lexer/" + fileName;
+        std::string sourceCode = Utils::readSourceCode(fullPath);
+        sourceCode += '\0';
+        auto sequence = Tokenizer::tokenizeSeq(sourceCode, false);
+        
+        if (sequence.second.has_value()) {
+            int a = sequence.second->first;
+            int b = sequence.second->second;
+            std::cerr << "Lexer Error at line:" << a+1 << ":" << b+1 << std::endl;
+            return;
+        }
+
+        std::vector<Token> tokens = sequence.first;
+        Parser parser(tokens);
+        parser.parse(isVerbose);
+        return;
+}
+
+void Parser::parse(bool isVerbose) {
     while(!remSymbols.empty() && !remTokens.empty()) {
         std::optional<Node> changedNode = parseSymbol();
         if(!changedNode.has_value()) {
             std::cout << "Parsing Error at Token " << remTokens.back();
+            return;
         }
-        std::cout << changedNode.value() << '\n'; //this should always show the production used.
+        if(isVerbose) {
+            std::cout << changedNode.value() << '\n'; //this should always show the production used.
+        }
         parseTree.push_back(changedNode.value());
         remSymbols.pop_back();
         for(int i = changedNode->getChildren().size()-1; i>=0; i--) {
@@ -44,7 +68,7 @@ void Parser::parse() {
         //Success!
         return;
     } else {
-        std::cout << "Failure. Leftover Tokens or Symbols." << '\n';
+        std::cout << "Failure. Leftover Tokens or Symbols. The otherone is empty" << '\n';
         return;
     }
 }

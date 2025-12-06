@@ -21,7 +21,7 @@ void printTokens(std::vector<Token> tokens, std::string fileName) {
         }
 }
 
-void run(const std::string& fileName, const std::string& path, bool isVerbose) {
+void run_lexer(const std::string& fileName, const std::string& path, bool isVerbose) {
     std::string sourceCode = Utils::readSourceCode(path);
     sourceCode += '\0';
     auto sequence = Tokenizer::tokenizeSeq(sourceCode, isVerbose);

@@ -14,7 +14,7 @@ Node::Node(std::string val)
     : type(terminal), children(), token(Token("", val, -1, -1)) {}
 
 std::ostream& operator<<(std::ostream& os, const Node& node) {
-    os << "Node(Type=" << static_cast<int>(node.type) << ", Children=[";
+    os << "Node(Type=" << (node.type) << ", Children=[";
     for (size_t i = 0; i < node.children.size(); ++i) {
         os << node.children[i];
         if (i + 1 < node.children.size()) os << ", ";

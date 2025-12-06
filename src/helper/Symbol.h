@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #ifndef COMPILER_LAB_SYMBOL_H
 #define COMPILER_LAB_SYMBOL_H
 
