@@ -122,6 +122,189 @@ std::optional<Node> Parser::parseSymbol() {
         case decEnd:
             symbol.addChild(std::string(";"));
             return symbol;
+        case declarator:
+            if(next.getValue()=="*") {
+                symbol.addChild(pointer);
+                symbol.addChild(directdec);
+                return symbol;
+            } else {
+                symbol.addChild(directdec);
+                return symbol;
+            }
+        case pointer:
+            symbol.addChild(std::string("*"));
+            symbol.addChild(pointer_);
+            return symbol;
+        case pointer_:
+            if(next.getValue()=="*") {
+                symbol.addChild(std::string("*"));
+                symbol.addChild(pointer_);
+                return symbol;
+            } else {
+                return symbol;
+            }
+        case type:
+            if(next.getValue()=="void") {
+                symbol.addChild(std::string("void"));
+                return symbol;
+            } else if(next.getValue()=="char") {
+                symbol.addChild(std::string("char"));
+                return symbol;
+            } else if(next.getValue()=="int") {
+                symbol.addChild(std::string("int"));
+                return symbol;
+            } else if(next.getValue()=="struct") {
+                symbol.addChild(structtype);
+                return symbol;
+            } else {
+                return std::nullopt;
+            }
+        case structtype:
+            if(peek(1).getValue()=="{") {
+                symbol.addChild(std::string("struct"));
+                symbol.addChild(std::string("{"));
+                symbol.addChild(structdeclist);
+                symbol.addChild(std::string("}"));
+                return symbol;
+            } else if(peek(1).getTokenType()=="identifier") {
+                if(peek(2).getValue()=="{") {
+                    symbol.addChild(std::string("struct"));
+                    symbol.addChild(id);
+                    symbol.addChild(std::string("{"));
+                    symbol.addChild(structdeclist);
+                    symbol.addChild(std::string("}"));
+                } else {
+                    symbol.addChild(std::string("struct"));
+                    symbol.addChild(id);
+                }
+            } else {
+                return std::nullopt;
+            }
+        case structdeclist:
+            symbol.addChild(dec);
+            symbol.addChild(structdeclist_);
+            return symbol;
+        case structdeclist_:
+            if(next.getValue()=="}") {
+                return symbol;
+            } else {
+                symbol.addChild(dec);
+                symbol.addChild(structdeclist_);
+                return symbol;
+            }
+        case dec:
+            symbol.addChild(type);
+            symbol.addChild(dec_);
+            return symbol;
+        case dec_:
+            if(next.getValue()==";") {
+                symbol.addChild(decEnd);
+                return symbol;
+            } else {
+                symbol.addChild(declarator);
+                symbol.addChild(decEnd);
+            }
+        case directdec:
+            if(next.getValue()=="(") {
+                symbol.addChild(std::string("("));
+                symbol.addChild(declarator);
+                symbol.addChild(std::string(")"));
+                symbol.addChild(directdec_);
+                return symbol;
+            } else {
+                symbol.addChild(id);
+                symbol.addChild(directdec_);
+                return symbol;
+            }
+        case directdec_:
+            if(next.getValue()=="(") {
+                symbol.addChild(std::string("("));
+                symbol.addChild(paramlist);
+                symbol.addChild(std::string(")"));
+                symbol.addChild(directdec_);
+                return symbol;
+            } else {
+                return symbol;
+            }
+        case paramlist:
+            symbol.addChild(paramdec);
+            symbol.addChild(paramlist_);
+            return symbol;
+        case paramlist_:
+            if(next.getValue()=="(") {
+                return symbol;
+            } else {
+                symbol.addChild(std::string(","));
+                symbol.addChild(paramdec);
+                symbol.addChild(paramlist_);
+                return symbol;
+            }
+        case paramdec:
+            symbol.addChild(type);
+            symbol.addChild(paramdec_);
+            return symbol;
+        case paramdec_: // I can't do this in LL(k) easily, declarator will always yield id before ')' and vice versa for abstract-dec
+            if(peek(0).getValue() == "," || peek(0).getValue() == ")") {
+                return symbol;
+            }
+            { //namespace for k
+            int k = 0;
+            while(peek(k).getValue() != "EOF") {
+                if(peek(k).getTokenType() == "identifier") {
+                    symbol.addChild(declarator);
+                    return symbol;
+                }
+                if(peek(k).getValue() == ")") {
+                    symbol.addChild(abstractdeclarator);
+                    return symbol;
+                }
+                k++;
+            }
+            }
+            return std::nullopt;
+        case abstractdeclarator:
+            if(next.getValue() == "*") {
+                symbol.addChild(pointer);
+                symbol.addChild(abstractdeclarator_);
+                return symbol;
+            } else {
+                symbol.addChild(directabstractdeclarator);
+            }
+        case abstractdeclarator_:
+            if(next.getValue() == "(") {
+                symbol.addChild(directabstractdeclarator);
+                return symbol;
+            } else {
+                return symbol;
+            }
+        case directabstractdeclarator:
+            if(next.getValue() == "(" && (peek(1).getValue()=="void" || peek(1).getValue()=="char" || peek(1).getValue()=="int" || peek(1).getValue()=="struct")) {
+                symbol.addChild(std::string("("));
+                symbol.addChild(paramlist);
+                symbol.addChild(std::string(")"));
+                symbol.addChild(directabstractdeclarator_);
+                return symbol;
+            } else {
+                symbol.addChild(std::string("("));
+                symbol.addChild(abstractdeclarator);
+                symbol.addChild(std::string(")"));
+                symbol.addChild(directabstractdeclarator_);
+                return symbol;
+            }
+        case directabstractdeclarator_: //follow is ')' and ',' first is '(' which makes for easier seperation
+            if(next.getValue()=="(") {
+                symbol.addChild(std::string("("));
+                symbol.addChild(paramlist);
+                symbol.addChild(std::string(")"));
+                symbol.addChild(directabstractdeclarator_);
+                return symbol;
+            } else {
+                return symbol;
+            }
+
+
+
+
     }
     std::cout << "Unhandled case found: " << symbol.getType();
     return std::nullopt;
