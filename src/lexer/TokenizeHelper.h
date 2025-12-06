@@ -1,6 +1,5 @@
 #ifndef COMPILER_LAB_TOKENIZEHELPER_H
 #define COMPILER_LAB_TOKENIZEHELPER_H
-#include <string>
 
 #include "../helper/structs/TokenizeAttempt.h"
 

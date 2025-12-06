@@ -10,6 +10,31 @@
 #include "../lexer/Tokenizer.h"
 
 
+void print(std::vector<Token> tokens);
+void print_shallow(Node node) {
+    //std::cout << "Node-";
+    std::cout << node.getType();
+    if(node.getToken().has_value()) {
+        std::cout << "-" << node.getToken()->getValue();
+    }
+}
+void print(Node node) {
+    print_shallow(node);
+    if(node.getChildren().empty()) {
+        return;
+    }
+    std::cout << "-(";
+    bool first = true;
+    for(Node child:node.getChildren()) {
+        if(!first)
+            std::cout << ",";
+        first = false;
+        print_shallow(child);
+    }
+    std::cout << ")";
+
+}
+
 // Constructors
 Parser::Parser(std::vector<Token> tokens) {
     while (!tokens.empty()) { //This switches the order s.t. the token accessible by back is the first token that needs parsing
@@ -26,7 +51,8 @@ Node Parser::peekSymbol(int k) { //This isn't a standard thing of ll(k) parsers,
     return remSymbols.at(remSymbols.size()-k-1);
 }
 Token Parser::peek(int k) {
-    return remTokens.at(remSymbols.size()-k-1);
+    std::cout << "Peeked at " << remTokens.at(remTokens.size()-k-1) << "using k=" << k << '\n'; //TODO remove
+    return remTokens.at(remTokens.size()-k-1);
 }
 
 void Parser::run(const std::string& fileName, const std::string& path, bool isVerbose) { //This is a static method, just to be clear
@@ -44,19 +70,44 @@ void Parser::run(const std::string& fileName, const std::string& path, bool isVe
 
         std::vector<Token> tokens = sequence.first;
         Parser parser(tokens);
-        parser.parse(isVerbose);
+        if(!parser.parse(isVerbose)) {
+            std::cout << "Successfully parsed " << fileName << '\n';
+        }
         return;
 }
 
-void Parser::parse(bool isVerbose) {
+void print(std::vector<Token> tokens) {
+    std::cout<<"Debug print of tokens\n";
+    for(Token token:tokens)
+        std::cout << token << '\n';
+    std::cout <<"Debug print over\n";
+}
+
+void Parser::dump_state() {
+    std::cout << "remTokens" << '\n';
+    for(int i = remTokens.size()-1; i>=0; i--) {
+        std::cout << remTokens.at(i) << '\n';
+    }
+    std::cout << "remSymbols" << '\n';
+    for(int i = remSymbols.size()-1; i>=0; i--) {
+        Node node = remSymbols.at(i);
+        print_shallow(node);
+        std::cout << '\n';
+    }
+}
+
+int Parser::parse(bool isVerbose) {
     while(!remSymbols.empty() && !remTokens.empty()) {
         std::optional<Node> changedNode = parseSymbol();
         if(!changedNode.has_value()) {
-            std::cout << "Parsing Error at Token " << remTokens.back();
-            return;
+            std::cout << "Parsing Error at Token " << remTokens.back() << '\n';
+            dump_state();
+            return 1;
         }
         if(isVerbose) {
-            std::cout << changedNode.value() << '\n'; //this should always show the production used.
+            std::cout << '\t';
+            print(changedNode.value());
+            std::cout << '\n'; //this should always show the production used.
         }
         parseTree.push_back(changedNode.value());
         remSymbols.pop_back();
@@ -64,17 +115,21 @@ void Parser::parse(bool isVerbose) {
             remSymbols.push_back(changedNode->getChildren().at(i));
         }
     }
+    if(!remTokens.empty() && remTokens.back().getTokenType()=="EOF") {
+        remTokens.pop_back();
+    }
     if(remSymbols.empty() && remTokens.empty()) {
         //Success!
-        return;
+        return 0;
     } else {
         std::cout << "Failure. Leftover Tokens or Symbols. The otherone is empty" << '\n';
-        return;
+        dump_state();
+        return 1;
     }
 }
 std::optional<Node> Parser::parseSymbol() {
     Node symbol = remSymbols.back();
-    Token next = remTokens.back(); //Slightly easier access to next token for LL(1) purposes.
+    Token next = peek(0); //Slightly easier access to next token for LL(1) purposes.
     switch(symbol.getType()) {
         case terminal:
             assert(symbol.getToken()); //A terminal symbol (node object) needs to contain a token.
@@ -135,6 +190,7 @@ std::optional<Node> Parser::parseSymbol() {
             } else {
                 symbol.addChild(declarator);
                 symbol.addChild(extdec__);
+                return symbol;
             }
         case extdec__:
             if(next.getValue()==";") {
@@ -142,6 +198,7 @@ std::optional<Node> Parser::parseSymbol() {
                 return symbol;
             } else {
                 symbol.addChild(funcdef_);
+                return symbol;
             }
         case decEnd:
             symbol.addChild(std::string(";"));
@@ -197,9 +254,11 @@ std::optional<Node> Parser::parseSymbol() {
                     symbol.addChild(std::string("{"));
                     symbol.addChild(structdeclist);
                     symbol.addChild(std::string("}"));
+                    return symbol;
                 } else {
                     symbol.addChild(std::string("struct"));
                     symbol.addChild(id);
+                    return symbol;
                 }
             } else {
                 return std::nullopt;
@@ -227,6 +286,7 @@ std::optional<Node> Parser::parseSymbol() {
             } else {
                 symbol.addChild(declarator);
                 symbol.addChild(decEnd);
+                return symbol;
             }
         case directdec:
             if(next.getValue()=="(") {
@@ -255,7 +315,7 @@ std::optional<Node> Parser::parseSymbol() {
             symbol.addChild(paramlist_);
             return symbol;
         case paramlist_:
-            if(next.getValue()=="(") {
+            if(next.getValue()==")") {
                 return symbol;
             } else {
                 symbol.addChild(std::string(","));
@@ -293,6 +353,7 @@ std::optional<Node> Parser::parseSymbol() {
                 return symbol;
             } else {
                 symbol.addChild(directabstractdeclarator);
+                return symbol;
             }
         case abstractdeclarator_:
             if(next.getValue() == "(") {

@@ -12,7 +12,8 @@ public:
 
     Node peekSymbol(int k);
     Token peek(int k);
-    void parse(bool isVerbose);
+    void dump_state();
+    int parse(bool isVerbose);
     std::optional<Node> parseSymbol();
 
     std::vector<Token> getRemTokens() const { return remTokens;}
