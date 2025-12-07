@@ -38,6 +38,18 @@
     X(directabstractdeclarator) \
     X(directabstractdeclarator_) \
     X(funcdef_) /* underscore as the rest of the functiondef symbols have already been parsed by extdec, extdec_ and extdec__ for LL(1) purposes. */ \
+    X(compoundstatement) \
+    X(blockitemlist) \
+    X(blockitem) \
+    X(statement) /*stat is already defined somewhere, might be windows exclusive, regardless, I will call statements statements :/ */ \
+    X(labelstatement) \
+    X(exprstatement) \
+    X(selectstatement) \
+    X(selectstatement_) \
+    X(iterstatement) \
+    X(jumpstatement) \
+    X(expr) \
+
 
 
 //actual enum definition

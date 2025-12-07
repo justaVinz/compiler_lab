@@ -12,7 +12,7 @@
 
 void print(std::vector<Token> tokens);
 void print_shallow(Node node) {
-    //std::cout << "Node-";
+    //std::cout << "Node$";
     std::cout << node.getType();
     if(node.getToken().has_value()) {
         std::cout << "-" << node.getToken()->getValue();
@@ -23,15 +23,15 @@ void print(Node node) {
     if(node.getChildren().empty()) {
         return;
     }
-    std::cout << "-(";
+    std::cout << " $";
     bool first = true;
     for(Node child:node.getChildren()) {
         if(!first)
-            std::cout << ",";
+            std::cout << " ";
         first = false;
         print_shallow(child);
     }
-    std::cout << ")";
+    std::cout << "$";
 
 }
 
@@ -386,6 +386,102 @@ std::optional<Node> Parser::parseSymbol() {
             } else {
                 return symbol;
             }
+        case funcdef_:
+            symbol.addChild(compoundstatement);
+            return symbol;
+        case compoundstatement:
+            symbol.addChild(std::string("{"));
+            symbol.addChild(blockitemlist);
+            symbol.addChild(std::string("}"));
+            return symbol;
+        case blockitemlist:
+            if(next.getValue() == "}") {
+                return symbol;
+            } else {
+                symbol.addChild(blockitem);
+                symbol.addChild(blockitemlist);
+                return symbol;
+            }
+        case blockitem:
+            if(next.getValue() == "(" && (next.getValue()=="void" || next.getValue()=="char" || next.getValue()=="int" || next.getValue()=="struct")) {
+                symbol.addChild(dec);
+                return symbol;
+            } else {
+                symbol.addChild(statement);
+                return symbol;
+            }
+        case statement:
+            if(next.getTokenType() == "identifier" && peek(1).getValue()==":") {
+                symbol.addChild(labelstatement);
+                return symbol;
+            } else if(next.getValue() == "if") {
+                symbol.addChild(selectstatement);
+                return symbol;
+            } else if(next.getValue() == "while") {
+                symbol.addChild(iterstatement);
+                return symbol;
+            } else if(next.getValue() == "goto" || next.getValue() == "continue" || next.getValue() == "break" || next.getValue() == "return") {
+                symbol.addChild(jumpstatement);
+                return symbol;
+            } else {
+                symbol.addChild(exprstatement); // :(
+                return symbol;
+            }
+        case labelstatement:
+            symbol.addChild(id);
+            symbol.addChild(std::string(":"));
+            symbol.addChild(statement);
+            return symbol;
+        case selectstatement:
+            symbol.addChild(std::string("if"));
+            symbol.addChild(std::string("("));
+            symbol.addChild(expr);
+            symbol.addChild(std::string(")"));
+            symbol.addChild(statement);
+            symbol.addChild(selectstatement_);
+            return symbol;
+        case selectstatement_:
+            if(next.getValue() == "else") {
+                symbol.addChild(std::string("else"));
+                symbol.addChild(statement);
+                return symbol;
+            } else {
+                return symbol;
+            }
+        case iterstatement:
+            symbol.addChild(std::string("while"));
+            symbol.addChild(std::string("("));
+            symbol.addChild(expr);
+            symbol.addChild(std::string(")"));
+            symbol.addChild(statement);
+            return symbol;
+        case jumpstatement:
+            if(next.getValue() == "goto") {
+                symbol.addChild(std::string("goto"));
+                symbol.addChild(id);
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else if(next.getValue() == "continue") {
+                symbol.addChild(std::string("continue"));
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else if(next.getValue() == "break") {
+                symbol.addChild(std::string("break"));
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else if(next.getValue() == "return" && peek(1).getValue() == ";") {
+                symbol.addChild(std::string("return"));
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else if(next.getValue() == "return") {
+                symbol.addChild(std::string("return"));
+                symbol.addChild(expr);
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else { //no need to try anything here if it doesn't work, keeps unsuccessful parsing shorter ig.
+                return std::nullopt;
+            }
+
 
 
 
