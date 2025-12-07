@@ -22,14 +22,14 @@ int main(int argc, char** argv) {
 
     if (argc >= 3 && std::string(argv[1]) == "--parse") {
         std::string file = argv[2];
-        std::string fullPath = "test/parser/" + file;
+        std::string fullPath = "../../test/parser/" + file;
         bool success = runParser(file, fullPath, false);
         return success ? 0 : 1;
     }
 
     if (argc >= 3 && std::string(argv[1]) == "--parse_verbose") {
         std::string file = argv[2];
-        std::string fullPath = "test/parser/" + file;
+        std::string fullPath = "../../test/parser/" + file;
         bool success = runParser(file, fullPath, true);
         return success ? 0 : 1;
     }

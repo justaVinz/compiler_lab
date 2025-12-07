@@ -14,6 +14,28 @@ const Token& Parser::current() const {
     return tokens[position];
 }
 
+void printNode(const ParseNode* node, int indent = 0) {
+    if (!node) return;
+    for (int i = 0; i < indent; ++i) std::cout << "  ";
+
+    std::cout << node->name;
+    if (node->token) {
+        std::cout << "  [token: " << node->token->getTokenType()
+                  << " '" << node->token->getValue() << "']";
+    }
+    std::cout << "\n";
+
+    for (const auto& child : node->children) {
+        printNode(child.get(), indent + 1);
+    }
+}
+
+std::unique_ptr<ParseNode> Parser::makeNode(const std::string& name) {
+    auto node = std::make_unique<ParseNode>();
+    node->name = name;
+    return node;
+}
+
 bool Parser::atEnd() const {
     return current().getTokenType() == "EOF";
 }
@@ -66,11 +88,17 @@ bool Parser::parseTranslationUnit() {
         setError("No tokens to parse");
         return false;
     }
+
+    auto root = makeNode("translation-unit");
+
     while (!atEnd()) {
-        if (!parseExternalDeclaration()) {
+        std::unique_ptr<ParseNode> extDeclNode;
+        if (!parseExternalDeclaration(extDeclNode)) {
             return false;
         }
+        root->children.push_back(std::move(extDeclNode));
     }
+    parseTreeRoot = std::move(root);
     return true;
 }
 
@@ -83,7 +111,9 @@ bool Parser::parse() {
     return ok && atEnd();
 }
 
-bool Parser::parseExternalDeclaration() {
+bool Parser::parseExternalDeclaration(std::unique_ptr<ParseNode>& outNode) {
+    auto node = makeNode("external-declaration");
+
     std::vector<std::string> declSpecifiers;
     if (!parseDeclarationSpecifiers(declSpecifiers)) {
         setError("Expected declaration specifiers");
@@ -92,6 +122,7 @@ bool Parser::parseExternalDeclaration() {
 
     // If the next token is ';', this is a pure type/struct declaration
     if (matchPunctuator(";")) {
+        outNode = std::move(node);
         return true;
     }
 
@@ -106,36 +137,61 @@ bool Parser::parseExternalDeclaration() {
     if (isFunction && matchPunctuator("{")) {
         --position; // rewind '{' for compound-statement parsing
         position = backup;
-        return parseFunctionDefinition(declSpecifiers);
+
+        std::unique_ptr<ParseNode> funcNode;
+        if (!parseFunctionDefinition(declSpecifiers, funcNode)) {
+            return false;
+        }
+
+        node->children.push_back(std::move(funcNode));
+    }
+    else {
+        position = backup;
+
+        std::unique_ptr<ParseNode> declNode;
+        if (!parseDeclaration(declSpecifiers, declNode)) {
+            return false;
+        }
+        node->children.push_back(std::move(declNode));
     }
 
-    position = backup;
-    return parseDeclaration(declSpecifiers);
+    outNode = std::move(node);
+    return true;
 }
 
 
-bool Parser::parseFunctionDefinition(const std::vector<std::string>& declSpecifiers) {
+bool Parser::parseFunctionDefinition(const std::vector<std::string>& declSpecifiers, std::unique_ptr<ParseNode>& outNode) {
     (void)declSpecifiers;
     bool isFunction = false;
+
+    auto node = makeNode("function-definition");
+
     if (!parseDeclarator(isFunction) || !isFunction) {
         setError("Expected function declarator");
         return false;
     }
+    node->children.push_back(makeNode("declarator"));
 
+    auto funcNode = makeNode("compound-statement");
     // skip optional declaration-list (not supported in subset)
     if (!parseCompoundStatement()) {
         setError("Invalid function body");
         return false;
     }
+    node->children.push_back(makeNode("compound-statement"));
+
+    outNode = std::move(node);
     return true;
 }
 
-bool Parser::parseDeclaration(const std::vector<std::string>& declSpecifiers) {
+bool Parser::parseDeclaration(const std::vector<std::string>& declSpecifiers, std::unique_ptr<ParseNode>& outNode) {
     (void)declSpecifiers;
 
+    auto node = makeNode("declaration");
     // optional init-declarator-list
     if (matchPunctuator(";")) {
         // declaration-specifiers ;
+        outNode = std::move(node);
         return true;
     }
 
@@ -147,6 +203,10 @@ bool Parser::parseDeclaration(const std::vector<std::string>& declSpecifiers) {
         setError("Expected ';' after declaration");
         return false;
     }
+
+    node->children.push_back(makeNode("init-declarator-list"));
+
+    outNode = std::move(node);
     return true;
 }
 

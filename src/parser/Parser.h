@@ -6,6 +6,12 @@
 
 #include "../helper/structs/Token.h"
 
+struct ParseNode {
+    std::string name;  // nonterminal name or token kind
+    const Token* token = nullptr; // for leaves (= actual tokens), nullptr for internal nodes
+    std::vector<std::unique_ptr<ParseNode>> children;
+};
+
 class Parser {
 public:
     explicit Parser(std::vector<Token> tokens);
@@ -17,6 +23,12 @@ public:
 private:
     std::vector<Token> tokens;
     size_t position {0};
+
+    std::unique_ptr<ParseNode> parseTreeRoot; // root of the parse tree
+
+    // helper to create nodes
+    std::unique_ptr<ParseNode> makeNode(const std::string& name);
+
     std::string errorMessage;
     std::optional<Token> errorToken;
 
