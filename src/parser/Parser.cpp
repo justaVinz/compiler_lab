@@ -36,22 +36,26 @@ void print(Node node) {
 }
 
 // Constructors
-Parser::Parser(std::vector<Token> tokens) {
+Parser::Parser(std::vector<Token> tokens, bool verbose) {
     while (!tokens.empty()) { //This switches the order s.t. the token accessible by back is the first token that needs parsing
         remTokens.push_back(tokens.back());
         tokens.pop_back();
     }
     remSymbols.push_back(Symbol::start);
+    isVerbose=verbose;
 }
 
-Parser::Parser() : remSymbols(), parseTree() {}
+Parser::Parser() : remSymbols(), parseTree() {
+    isVerbose=false;
+}
 
 // Lookahead k
 Node Parser::peekSymbol(int k) { //This isn't a standard thing of ll(k) parsers, i hope i don't need to use it.
     return remSymbols.at(remSymbols.size()-k-1);
 }
 Token Parser::peek(int k) {
-    std::cout << "Peeked at " << remTokens.at(remTokens.size()-k-1) << "using k=" << k << '\n'; //TODO remove
+    if(isVerbose)
+        std::cout << "Peeked at " << remTokens.at(remTokens.size()-k-1) << "using k=" << k << '\n'; //TODO remove
     return remTokens.at(remTokens.size()-k-1);
 }
 
@@ -69,8 +73,8 @@ void Parser::run(const std::string& fileName, const std::string& path, bool isVe
         }
 
         std::vector<Token> tokens = sequence.first;
-        Parser parser(tokens);
-        if(!parser.parse(isVerbose)) {
+        Parser parser(tokens, isVerbose);
+        if(!parser.parse()) {
             std::cout << "Successfully parsed " << fileName << '\n';
         }
         return;
@@ -96,7 +100,7 @@ void Parser::dump_state() {
     }
 }
 
-int Parser::parse(bool isVerbose) {
+int Parser::parse() {
     while(!remSymbols.empty() && !remTokens.empty()) {
         std::optional<Node> changedNode = parseSymbol();
         if(!changedNode.has_value()) {
@@ -403,7 +407,7 @@ std::optional<Node> Parser::parseSymbol() {
                 return symbol;
             }
         case blockitem:
-            if(next.getValue() == "(" && (next.getValue()=="void" || next.getValue()=="char" || next.getValue()=="int" || next.getValue()=="struct")) {
+            if((next.getValue()=="void" || next.getValue()=="char" || next.getValue()=="int" || next.getValue()=="struct")) {
                 symbol.addChild(dec);
                 return symbol;
             } else {
@@ -480,6 +484,15 @@ std::optional<Node> Parser::parseSymbol() {
                 return symbol;
             } else { //no need to try anything here if it doesn't work, keeps unsuccessful parsing shorter ig.
                 return std::nullopt;
+            }
+        case exprstatement:
+            if(next.getValue()==";") {
+                symbol.addChild(std::string(";"));
+                return symbol;
+            } else {
+                symbol.addChild(expr);
+                symbol.addChild(std::string(";"));
+                return symbol;
             }
 
 

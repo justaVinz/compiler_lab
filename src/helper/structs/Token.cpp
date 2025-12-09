@@ -19,8 +19,8 @@ std::ostream& operator<<(std::ostream& os, const Token& token) {
     os << "Token("
        << token.getTokenType() << ", "
        << token.getValue() << ", "
-       << token.getSourceLine() << ", "
-       << token.getSourceIndex() << ")";
+       << token.getSourceLine()+1 << ", "
+       << token.getSourceIndex()+1 << ")";
     return os;
 }
 
