@@ -66,7 +66,7 @@ std::pair<std::vector<Token>, std::optional<std::pair<int, int>>> Tokenizer::tok
             if(c == '*' && *(sourceP+1) == '/') {
                 pos += 2;
                 commentState = 0;
-                sourceP++;
+                sourceP+=2;
                 continue;
             } else if(c == '\n') {
                 line++;
