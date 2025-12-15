@@ -54,6 +54,7 @@ start:
     return sum;
 }
 
+/* original sizeof tests + some pointer ones */
 int sizeof_demo(struct Point *p) {
     int s1;
     int s2;
@@ -69,6 +70,42 @@ int sizeof_demo(struct Point *p) {
     s3 = sizeof (p->x);
 
     return s1 + s2 + s3 + s4;
+}
+
+/* NEW: explicitly tests abstract-declarator / direct-abstract-declarator
+ *
+ * C4 grammar:
+ *   type-name:
+ *       type-specifier abstract-declarator_opt
+ *
+ *   abstract-declarator:
+ *       pointer
+ *       pointer_opt direct-abstract-declarator
+ *
+ *   direct-abstract-declarator:
+ *       ( abstract-declarator )
+ *       direct-abstract-declarator_opt ( parameter-list )
+ */
+int sizeof_abstract_demo(void) {
+    int s1;
+    int s2;
+    int s3;
+
+    /* abstract-declarator = pointer */
+    s1 = sizeof(int*);     /* int * */
+
+    /* abstract-declarator = pointer (with two stars) */
+    s2 = sizeof(int**);    /* int ** */
+
+    /* abstract-declarator = pointer_opt direct-abstract-declarator
+       here:  int (*)(int a, int b)
+       - pointer_opt:        '*'
+       - direct-abstract-declarator:  ( parameter-list )
+         where parameter-list is: 'int a, int b'
+     */
+    s3 = sizeof(int (*)(int a, int b));
+
+    return s1 + s2 + s3;
 }
 
 int main() {
@@ -91,6 +128,9 @@ int main() {
     d = d + loop_demo(10);
 
     d = d + sizeof_demo(&p);
+
+    /* NEW: exercise abstract-declarator parsing */
+    d = d + sizeof_abstract_demo();
 
     return d;
 }

@@ -51,6 +51,8 @@ bool runParser(const std::string& fileName, const std::string& path, bool isVerb
         return false;
     }
 
+    printNode(parser.getParseTree());
+
     if (isVerbose) {
         std::cout << "Parsing successful" << std::endl;
     }
