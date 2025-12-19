@@ -8,6 +8,7 @@
 #include <assert.h>
 #include "../helper/Utils.h"
 #include "../lexer/Tokenizer.h"
+#include "../prettyPrint/prettyPrint.h"
 
 
 void print(std::vector<Token> tokens);
@@ -77,6 +78,12 @@ void Parser::run(const std::string& fileName, const std::string& path, bool isVe
         if(!parser.parse()) {
             std::cout << "Successfully parsed " << fileName << '\n';
         }
+
+        prettyPrint::Options opt;
+        opt.unicodeBranches = true;
+        opt.showTokenValue = true;
+
+        prettyPrint::printForest(parser.getParseTree(), std::cout, opt);
         return;
 }
 
